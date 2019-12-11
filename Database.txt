@@ -1,0 +1,221 @@
+CREATE TABLE credit_card (
+credit_card_num number(16)  PRIMARY KEY,
+credit_card_status varchar2(10) NOT NULL,
+name_on_cred_card varchar2(30) NOT NULL,
+credit_cvv_num number(3) NOT NULL,
+credit_cur_pin number(4) NOT NULL,
+credit_expiry_date date NOT NULL,
+UCI number(16) NOT NULL,
+credit_card_type varchar2(10) NOT NULL,
+credit_score number(3) NOT NULL,
+credit_limit number(20,2) NOT NULL,
+income number(20,2) NOT NULL,
+Foreign key (UCI), references customer(UCI);
+);
+
+Insert into credit_card values(5189101213259898,'ACTIVE','Gold',100000.00,200,9898,623,(TO_DATE('2023/06/30', 'yyyy/mm/dd')),690600.00,'Mohit Pursnani',(TO_DATE('2018/06/30', 'yyyy/mm/dd')),7894561239632587);
+************************************************************************************************************************************************
+
+CREATE TABLE debit_card (
+account_number number(11) NOT NULL,
+debit_card_number number(16) PRIMARY KEY,
+debit_card_status varchar2(10) NOT NULL,
+name_on_deb_card varchar2(30) NOT NULL,
+debit_cvv_num number(3) NOT NULL,
+debit_current_pin number(4) NOT NULL,
+debit_expiry_date date NOT NULL,
+UCI number(16) NOT NULL,
+debit_card_type varchar2(10) NOT NULL,
+FOREIGN KEY (account_number)
+REFERENCES accounts(account_number)
+);
+Insert into debit_card values(5234567891012131,'ACTIVE','Platinum',2131,067,(TO_DATE('2024/07/30', 'yyyy/mm/dd')),'Mohit Pursnani',12345678910);
+Insert into debit_card values(5221562391012233,'ACTIVE','Silver',2233,057,(TO_DATE('2022/08/30', 'yyyy/mm/dd')),'Mohit Pursnani',12345678910);
+
+******************************************************************************************************************
+
+CREATE TABLE CUSTOMERS ( UCI NUMBER (16) PRIMARY KEY,  FIRST_NAME VARCHAR2 (20) NOT NULL, LAST_NAME VARCHAR2 (20));
+insert into customer_bean values (7894561239632587 , 'Mohit','Pursnani');
+*****************************************************************************************************************************************************
+
+
+INSERT into Credit_Card_transaction Values(
+1236547899,
+7894561239632587, 
+5600,
+TIMESTAMP '2019-05-07 12:35:00',
+'Shopping',
+5189101213259898
+);
+
+INSERT into Credit_Card_transaction Values(
+1236547890,
+7894561239632587, 
+2800,
+TIMESTAMP '2019-10-07 12:36:00',
+'Shopping',
+5189101213259898
+);
+
+
+*******************#####
+INSERT into Credit_Card_transaction Values(
+1236547881,
+7894561239632587, 
+13000,
+TIMESTAMP '2018-05-07 10:40:00',
+'MONTHLY BILLS',
+5189101213259898);
+
+INSERT into Credit_Card_transaction Values(
+1236547882,
+7894561239632587, 
+12600,
+TIMESTAMP '2018-05-13 11:39:00',
+'RENT',
+5189101213259898
+);
+********************
+
+CREATE TABLE  transaction
+(
+trans_id NUMBER(11) PRIMARY KEY ,
+UCI  number(16)  NOT NULL , 
+Customer_Account_Number NUMBER(11),
+debit_Card_Num NUMBER(16) NOT NULL  , 
+date_Of_trans TIMESTAMP   NOT NULL  ,
+amount NUMBER(20,2) NOT NULL,
+description varchar2(20) NOT NULL,
+FOREIGN KEY (debit_Card_Num)
+REFERENCES debit_card(debit_card_number)
+);
+
+INSERT into transaction Values(
+1234567891,
+7894561239632587, 
+12345678910,
+2300,
+TIMESTAMP '2019-05-04 13:35:00',
+'Ganesh supermarket',
+'CARD',
+'DEBIT',
+5234567891012131);
+
+INSERT into transaction Values(
+1234567892,
+7894561239632587, 
+12345678910,
+5400,
+TIMESTAMP '2019-09-04 12:35:00',
+'Walmart merchant',
+'CARD',
+'DEBIT',
+5234567891012131);
+
+
+
+
+##################################
+
+
+
+
+#############################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+INSERT into transaction Values(
+2234567891,
+7894561239632587, 
+12345678910,
+2300,
+TIMESTAMP '2019-05-04 13:35:00',
+'Ganesh supermarket',
+'ONLINE',
+'DEBIT',
+5221562391012233);
+
+INSERT into transaction Values(
+2234567892,
+7894561239632587, 
+12345678910,
+5400,
+TIMESTAMP '2019-09-04 12:35:00',
+'Walmart merchant',
+'ONLINE',
+'DEBIT',
+5221562391012233);
+
+
+
+
+INSERT into transaction Values(
+2234567894,
+7894561239632587, 
+12345678910,
+1200,
+TIMESTAMP '2017-07-04 13:45:00',
+'Movie Tickets',
+'ONLINE',
+'DEBIT',
+5221562391012233);
+
+
+
+
+INSERT into transaction Values(
+2234567893,
+7894561239632587, 
+12345678910,
+9400,
+TIMESTAMP '2018-04-04 10:13:00',
+'Shopping',
+'ONLINE',
+'DEBIT',
+5221562391012233);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+CREATE TABLE Service_Requests(
+    case_id_number varchar2(20) PRIMARY KEY ,
+    case_timestamp Timestamp NOT NULL,
+   status_of_service_request varchar2(15) NOT NULL,
+    account_number number(11) ,
+request_map varchar2(5) NOT NULL,
+    UCI varchar2(16) NOT NULL,
+bank_timestamp Timestamp ,
+user_id varchar2(25) ,
+    define_service_request varchar2(20) NOT NULL,
+    card_number number(16) ,
+customer_remarks varchar2(20) ,
+bank_admin_remarks varchar2(20) ,
+    customer_reference_ID varchar2(22) NOT NULL
+
+
+
+
+
+
+
+
+
+  );
+
+select credit_trans_Id,UCI,Credit_Card_Num,Date_Of_Trans,amount,description from Credit_Card_trans WHERE Date_Of_Trans between  '2018-01-01' And '2019-10-01' and credit_card_num=5189101213259898;
+
+
+
+
+    
+
+
+create table Accounts (
+    account_number number(11) PRIMARY KEY, 
+    uci number(16) NOT NULL,
+    FOREIGN KEY(uci) references Customers(uci)
+
+);
+
+insert into Account_bean values ( 12345678910 , 7894561239632587);
+
+
+// insert into service_requests values('ANDC19112810163482',12345678910,0,'',TIMESTAMP '2019-05-07 12:35:00',5234567891012131,TIMESTAMP '2019-05-07 12:35:00','ANDC1911281016348221','','1234567891','ANDC','Pending',1,7894561239632587);
